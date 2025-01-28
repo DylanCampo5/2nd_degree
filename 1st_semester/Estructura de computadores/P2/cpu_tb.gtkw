@@ -1,0 +1,58 @@
+[*]
+[*] GTKWave Analyzer v3.3.108 (w)1999-2020 BSI
+[*] Mon Oct 28 00:36:59 2024
+[*]
+[dumpfile] "J:\Mi unidad\A_isaatc\Estructura de Computadores\EC2425\Prácticas\P2\PrepNueva2024\CpuDemo\cpu_tb.vcd"
+[dumpfile_mtime] "Mon Oct 28 00:34:41 2024"
+[dumpfile_size] 9671
+[savefile] "J:\Mi unidad\A_isaatc\Estructura de Computadores\EC2425\Prácticas\P2\PrepNueva2024\CpuDemo\cpu_tb.gtkw"
+[timestart] 0
+[size] 1920 957
+[pos] -1 -1
+*-15.273362 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] cpu_tb.
+[treeopen] cpu_tb.micpu.
+[treeopen] cpu_tb.micpu.camdat.
+[sst_width] 318
+[signals_width] 162
+[sst_expanded] 1
+[sst_vpaned_height] 279
+@28
+cpu_tb.reset
+cpu_tb.clk
+@200
+-
+-PC
+@24
+cpu_tb.micpu.camdat.pc_act[9:0]
+@200
+-
+-Entradas UC
+@29
+cpu_tb.micpu.undcon.Opcode[5:0]
+@28
+cpu_tb.micpu.undcon.zero
+@20000
+-
+@200
+-Salidas UC
+@28
+cpu_tb.micpu.undcon.s_inc
+cpu_tb.micpu.undcon.s_inm
+cpu_tb.micpu.undcon.we
+cpu_tb.micpu.undcon.wez
+cpu_tb.micpu.camdat.Op[2:0]
+@200
+-
+-Banco Regs.
+@24
+cpu_tb.micpu.camdat.regs.\R[1][7:0]
+cpu_tb.micpu.camdat.regs.\R[2][7:0]
+cpu_tb.micpu.camdat.regs.\R[3][7:0]
+cpu_tb.micpu.camdat.regs.\R[4][7:0]
+cpu_tb.micpu.camdat.regs.\R[5][7:0]
+cpu_tb.micpu.camdat.regs.\R[6][7:0]
+cpu_tb.micpu.camdat.regs.\R[7][7:0]
+cpu_tb.micpu.camdat.regs.\R[8][7:0]
+[pattern_trace] 1
+[pattern_trace] 0

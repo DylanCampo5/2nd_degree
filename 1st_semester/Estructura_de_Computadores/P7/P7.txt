@@ -1,0 +1,66 @@
+Todo lo que hace el ordenador lo va a controlar una unidad de control por sus salidas (Son 6 weas (s_inc, s_inm, Op, we3, wez))
+De este microp sale un OPCODE y una z 
+A ambos les entra el clk
+
+
+MICROPRO:
+Esta memoria tiene 1024 palabras de intruccion, de 16 bits
+El registro con la direccion de memoria estara en el proavevae counter (PC)
+La direccion va a el sumador con un 1, y va al mux el cual elije el PC+1 o la otra y lo controlara con el s_inc    
+            s_inc = 0 lo cogera de los ultimos 10 bits de la instruccion
+            s_in = 1 lo coge de PC+1
+            En el primer ciclo, la linea de reset va a 1
+De la Memoria de Programa (MP) saldran 16bits, y de aca irán saliendo de a poco bits a otros sitios
+
+- Banco de registros:
+Leer dos registros simultaneamente del banco (E/S) y escribe un registro que quiere leer (E/S)
+Si meto RA1 (>) 0010 y RA2 (>) 0111, por RD1 (>) sale del registro 2 y por el RD2 (>) sale del registro 7
+En WA3 (>) meto 1010 y em WD3 (<)
+El we3 debe estar en 1 para que funcniones esta weita
+
+Si s_inm es 0 es una operacion de la ALU (Almacena en el banco de resgistro el resultado)
+Si s_inm es 1 se escribe el valor codificado dentro de la instruccion
+Cuando a la udc le llega el OPCODE, este debe saber si es una suma, resta, o lo que chingados sea
+
+wez = 1 para un operacion aritmetica logica
+Me interesa que se ponga de 0 a 1 solo cuando la operacion de la ALU, el biestable anatliza y almacena solo cuando este esté a 1
+La unidad solo cuando se trate de una arimetica logica para despues saltar a traves de esa respuesta
+
+ADEMAS DE IMPLEMENTAR ESTE CAMINO DE DATOS
+Debo hacer un test bench con una señal de reloj y en cada ciclo se hara una instruccion de un programa que el dara
+A mitad de cada ciclo yo tendre que poner lo que deberia ejecutar:  (PROGRAMA EN ENSAMBLADOR)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+add R2 R3 R2, R2 + R3 = R2, al reves que mips
+Hay que hacer este programa codificado
+COMO Y DONDE? Cada una tiene una codificacion y estan en la tabla aquella to fea
+Ejemplo, la not tiene 000000 OPCODE y el resto da igual
+         la li tiene 0001 OPCODE CCCCCCCC Lo que tiene que cargar y Rd Rd Rd Rd en donde tiene que cargarlo
+         la j tiene 010000 POCODE y DDDDDDDDDD la direccion de memoria
+         Op Arimt Lógic tiene 1 Op Op Op de OPCODE, R1 R1 R1 R1, R2 R2 R2 R2, Rd Rd Rd Rd, algo+ALGO=alguito
+
+Hay que traer echo en microc, nos dan toda la wea que lleva dentroLa memori de programa, el fichero profile.dat se 
+
+Tmb hacer el testbech, tiene un esqueleto pa hacer toda la vaina, pa saber si funciona banco
+Tenemos la CPU_demo: vvp cpu_tb.vvp (La CPU con toda la vaina anterior) +n=14
+Genera un fichero cpu_tb.vcd, da igual el WARNING, suda
+gtkwave cpu_tb.vcd (acá hay algo mas)
+
+Bien estudiadito, como es el camino de datos y como se codifica, el nos dara en la practica un nuevo camino de datos y nos da un programa
+para codificar, allá mismo tocaremos el microc y cambiaremos lo que sea necesario
+
+
+
+CODIFICACION:
+j START:        0100 0000 0000 0101     j
+li #0 R2:       0001 0000 0000 0010     R2 = 0
+li #2 R1:       0001 0000 0010 0001     R1 = 2
+li #4 R3:       0001 0000 0100 0011     R3 = 4
+li #1 R4:       0001 0000 0001 0100     R4 = 1
+add R2 R3 R2:   1010 0010 0011 0010     R2 = 0 + 4 = 4
+sub R1 R4 R1:   1011 0001 0100 0001     R1 = 2 - 1 = 1
+jnz Iter:       0100 1000 0000 1001     j
+add R2 R3 R2:   1010 0010 0011 0010     R2 = 4 + 4 = 8
+sub R1 R4 R1:   1011 0001 0100 0001     R1 = 1 - 1 = 0
+jFIN:           0100 0000 0000 1100     j

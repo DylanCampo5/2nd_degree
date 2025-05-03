@@ -1,0 +1,79 @@
+REPASOTE DE CARLOS:
+Sistemas sincronos: 
+     |-----------|           |-----------|
+     |    20     |    40     |    20     |    40
+-----|           |-----------|           |-----------
+60s es el periodo		f = 1/60hz
+La señal esta periodo debe repetirse a lo largo de toda la simulacion con un bloq always
+
+-------------------------------------------------------------------------------------------------------------
+'timescale 1ns / 10ps
+reg clk;
+always
+begin
+  clk=1
+  #20
+  clk=0
+  #60
+end
+-------------------------------------------------------------------------------------------------------------
+FlipFlop D
+	module ffd (output reg q, input wire clk, reset, d);
+	  always @(posedge clk, posedge reset)
+	    if (reset)
+	      q <= 1'b0;
+	    else
+	      q <= d;
+	endmodule
+TMB:
+	module ffd(..., reset, carga, d);
+	  always...
+	    ...
+	      ...
+	    else
+	      if(carga)
+    		q <= d;
+	endmodule
+-------------------------------------------------------------------------------------------------------------
+module mux2 #(paramater WIFTH = 8)(ouptput wire [WIDTH-1:0] Y, input)
+
+...
+
+mux2 #(4) mimux(t_Y, t_D0, t_D1, t_s);
+------------------------------------------------------------------------------------------------------------
+u.c unidad de control de 7 pasos basico
+1. Carga el valor en el registro q y resetea a
+2. Paso al estado 1 y en este, pregunto, OYE! EL BIT MENOS SIGNIFICATIVO DE q (q0), ES UNO? Si sí, incrementa el numero de a's (CargaA)
+3. Desplaza q a la derecha (Para actualizar q0)
+4. 2.
+5. 3.
+6. 2.
+7. FIN
+
+MAQUINA DE ESTADO:
+S0 Carga0, ResetA
+S1 if CargaA	q0 == q1 
+S2 DesplazaQ
+S3 if q0 == 1	CargaA
+S4 DesplazaQ
+S5if q0 == 1	CargaA
+S6 Fin
+
+Hay que hacer: Un test bench para probar esta maquinita guapa he ez no te jode
+test bench: Hay q meter una fucking señal de reloj
+
+-----------------------------------------------------------------------------------------------------------
+
+reg 
+
+valor star 1
+espero 
+start 0
+espero
+fin
+
+#300
+#200
+#100
+Hasta que no podamos hacerlo, pq la señal cambia mas rapido que el tiempo que tarda en hacerse esos calculos
+Por lo que hay que buscar cual es la frecuencia maxima que podemos tener

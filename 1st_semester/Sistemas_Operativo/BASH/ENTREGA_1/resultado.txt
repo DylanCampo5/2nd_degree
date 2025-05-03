@@ -1,0 +1,6 @@
+Error, tas tonto o que
+Uso: ./infosession.sh [-h] [-z] [-u user1 ...]
+Opciones:
+  -h            Muestra esta ayuda.
+  -z            Incluye procesos con SID igual a 0.
+  -u user       Especifica uno o más usuarios cuyos procesos se listarán.

@@ -1,0 +1,91 @@
+Tengo 2 semanas para hacer el apartado 1, 2, 3 y 4 :|
+Ta peluda la cosa, me quiero contar un cojon por perezoso
+
+Para la tercera parte: No tiene FILE obligatorio que meter...
+
+Esta hablando una wea de una ruta con getcwd del #include <unistd.h>
+	get *getcwd(char *buf, size_t size);		// Pasarle un puntero de la ruta, si da NULL, hay error
+
+	// TEACHER:
+std::expected<std::string, int> getcwd
+std::array<char, max_path_size> buff
+char *result = getcwd(buff.data(), max_path_size);
+if(resutl == NULL)
+	return std::unexpected(errno)
+else 
+	return buff.data()
+std::expected 
+
+
+Cuidao, la segunda palabra del GET awdandj, debe empezar tipo "/wdjabwd/bakwd", importante la '/'
+Variables de entorno: 		DOCSERVER_PORT		DOCSERVER_BASEPORT (creo)		port = 8080
+Variables por defecto: 		(x): directorio de trabajo
+Funciones receive_request, hay dos formas de hacerlo, la facil:
+	Supondremos que toda la peticion vendra de golpe en el mismo paquete
+	El max_size sera el tmñ de nuestro paquete, COMO? 
+		std::string message_text();
+		message_text.resize(100);
+		int vutes_read = recv(nwe_fd(socket del cliente), message_text.data(), mesage_text.size(), 0)
+		if (bytes_read < 0)
+			// Error al recibir el mensaje
+		message_text.resize(bytes_read);
+		std::println("Otro sistema envio el mensaje "()"", message_text);
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+Para la cuarta parte: 
+
+pid_t pid = fork();		// fork lanza un proceso
+if (pid < 0) 
+	// Error al crear el proceso
+else if (pid == 0) 
+	// Este bloque se ejec en el proceso hijo
+else
+	// Este bloque se hara en el padre	
+
+Hacer un proceso hijo para ejec un programa desde docserver
+exec() lanza un programa de frma to drastuca, ahora es un proceso completamente ditinta, como una persona completamente nueva
+
+...
+else if (pid == 0)
+	execl("/bin/ls", "ls", "-l", "/etc", nullptr);
+	// Toda la vaina que se lanze aca se perdera si el exec funciona
+else
+...
+
+Variantes de exec:
+char *args[] = { "ls", "-l", "/etc", nullptr }		// MUY IMPORTANTE EL NULLPTR
+char *env[] = { "LANG=en_US.UTF-8", nullptr }
+execve("/bin/ls", args, env)		// Si lo q viene despues de la linea de exec va, hay un error, por lo que hay que meterlo en errno
+					   como un error no fatal
+
+El hijo debe comunicarle la salida estandar al proceso padre, para hacer esa comunicacion lo haremos una tuberia:
+int pipefd[2]; 		// Array de tmñ dos, como un archivador de dos cajones, uno para consultar y otro para escribir
+pipefd[0] ---> Descrptor de archivo para lectura
+pipefd[1] ---> Descriptor de archivo para escritura
+
+Como espera el padre a que el hijo acabe?:
+#include <sys/wait.h>
+
+pit_t put = fork();
+if (pid == 0) 
+	//Hacer acabar el hijo con codigo de salida 42
+	std::exit(42);
+else
+	int status;
+	waitpid(pid, estatus, 0);
+	if (WIFFEXTED(status))
+		int child_exit_status = WEXITSTATUS(status)
+		std::println(...)
+...
+
+dup:	La idea es sustituir lo que hay en el duc por lo de pipefd[1] con las variables adecuadas
+
+
+1. Lanzar un porgrama
+2. Comunicarlos con una tuberia
+3. Redirección
+
+Ir lanzando el programa al menos con el fork() y el exec()
+
+Acá acaba el fucking proyectiko de los cojones.

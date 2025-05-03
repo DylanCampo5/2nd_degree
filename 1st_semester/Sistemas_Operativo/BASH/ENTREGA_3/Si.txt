@@ -1,0 +1,11 @@
+... mmap mapear un archivo, lo coge, lee y mete en memoria
+... open para ver archivo
+... lseek para tener el tamaño del archivo
+... close para cerrarlo
+... munmap desmapera, al contrario
+
+Usaremos un include raro de C++ para hacer weas raras :)
+Aprender a usar la documentacion oficial de estas llamadas (Buscar en Google man Open c++)
+Nos pone el man que include debemos usar y distintas formas de usarlo
+Al final siempre hay un apartado return no se que, si hay un error nos pone lo que ocurre
+Ese es el codigo de error que debo propagar hacia el main y podemos obtener un mensaje del error que se ha producido

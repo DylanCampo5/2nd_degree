@@ -1,0 +1,153 @@
+Hacer un docserver que por ahora pille un -v y un -h (HACER PUNTO 1 Y 2)
+Hay que hacer el punto uno por separado del punto dos, que el dos incluya 
+el uno pero no al reves, da igual lo que tengamos, venir y entregarlo si o si
+
+LAS ENTREGAS PARCIALES valen más que las anteriores (Ni tanto, pero bueno (Sacar un 4 MIN))
+PTO 1:
+  Lee un archivo y lo mostrara en un formato det por pantalla
+  Content-Length: (tmñ)
+  ' '
+  (contenido del archivo)
+
+  Tenemos para la PE:
+    - GUION (con pseudocodigo)
+    - No se que adicional
+    - Codigo ejemplo :0 (Copy paste y pa lante dijo el teacher)
+
+  IMPORTANTE PARA LA PE:
+    - Manejo de errores (como abrir algo que no existe)
+    - No usaremos el control de errores por excepciones si no propagarlo hasta el main devolviendolo
+    a la funcion que lo llamo hasta el main que tiene una salida que dara error una vez llegue
+    
+
+  ERROR:
+    include<expected>
+    std::expected
+
+    EJEMP:
+	etd::ecpected<safefd, int> open_file(const std::string& path, int flags, mode_t mode = 0) { 	
+		// izq tipo de dato si no es un error y derecha lo contrartio
+
+	  int fd = open(path.c_str(), flags, mode);
+	  if (fd == 1) 
+	    return std::unexpecte...
+	...
+
+
+    COMO SE TRATA:
+	std::expected<SafeFD, int>   result = open_file("name.txt", flags, mode = 0);
+ 	if (! result.has_value()) {
+		//Manejar error
+		return result.error();
+	}
+	safefd fd = std::move(result.value());
+	std:.vactor<uint8_t> buffer(1024);
+	int error = read_file(fd, buffer, buffer.size());
+	if ( error != ESUCCESS)
+
+-------------------------------------------------------------------
+
+  Hay tener en cuenta todo el rato que esta abierto por que si da error leyendo el archivo, para que no se quede abierto todo el rato
+  Para eso hacer el close. Para hacer esto hay q tener en cuenta: 4.1 q va explicando como hacer una clase SafeFD para la vaina esta
+
+  "Es un envoltorio" para el dato fd_, el rollito guapo esta en el destructor, ya que viendolo, se puede entender que cuando destruya 
+  ese fd_, luego de eso hara auto un close guapo. Toda la otra vaina son los single no se que que son para instanciar UN SOLO OBJ, SOLO 1
+
+  COPIAR LA CLASE I-N-T-E-G-R-O
+
+-------------------------------------------------------------------
+
+  Hacer un parce de los arg, en otro doc hay uno hecho, verlo y adaptarlo
+  Hacer un error_fatal
+
+  -h
+
+  Hacer un error_fatal
+  (   int length = lseek ( fd, 0, SEEK_END );   )
+  Hacer un mapeo de archivo con open, mmap para mapearlo, munmap y luego el close (El close se supone que se hace con lo anterior)
+  El munmap podemos hacerlo con una clase como la del close pero adaptandolo para el munmap
+
+------------------------------------------------------------------
+
+  Hay unos enlaces que lit son codigos de copy & paste
+
+-----------------------------------------------------------------
+  close(PTO 1);   //:)
+
+
+
+
+PTO 2:
+  //Mucho texto de como debe ser implementado y todo el rollo sobre los sockets
+  Lado dere puso el Github de los Sockets y el izq el C++, lo hara to rapido:
+
+
+
+
+  #include<sys/socket.h>
+  #include<unistd.h>		//close
+  #include<arpa/inet.h> 	//htonl
+  #include<string>
+
+  int main() {
+  
+    int sock_fd = socket(AF_INET, SOCK_STREAM, 0);			// Tipo de familia de protocolo, de inter	// Tipo de Socket, stream para tcp	// Dentro de la familia, la sub
+    if (sock_fd < 0) {
+      return errno;
+    } 								// No funciona a menos que tenga direccion, tonces:
+
+    sockaddr_in local_address{};
+    local_address.sin_family = AF_INET;
+    local_address.sin_addr.s_addr = htonl(INADOR_ANY);
+    local_address.sin_port = htons(0);		// l 4by	s 2
+
+    int result = bind(
+      sock_fd;
+      reinterpret_cast<const socjaddr*>(&local_address),
+	sizeof(local_address)
+    )
+    if (result < 0) {
+      close(sock_fd);
+      return errno;
+    }
+
+   int result = listen(sock_fd, 5); 
+   if (result < 0) {
+      close(sock_fd);
+      return errno;
+   }
+
+    int new_fd = accept(sock_fd, reinterpret_cast<sockaddr*>(&source_address)), &source_address_length);
+    if (new_fd < 0) {
+      close(sock_fd);
+      return errno;
+    }
+
+    std::string message_text("Holiwi mirik");
+    int bytes:sent = send(new_fd, message_text.data(), message:text.sezi(), 0);
+    if (bytes_sent < 0) {
+      close(new_fd);
+      close(sock_fd);
+      retunr errno;
+    }
+
+    close(new_fd);
+    close(sock_fd)
+
+    return 0;
+  }
+
+
+
+- Al compilar la vainada esta
+g++ main.cc
+./a.out
+netcat -v 127.0.0.1 8080
+(Mucho texto)
+Holiwi marik
+
+
+lsof -i :8080
+
+
+En 15 min hizo un server de vdd, que capo loco
